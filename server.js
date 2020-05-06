@@ -3,8 +3,8 @@ require('dotenv').config();
 
 const express = require('express');
 const app = express();
-const port = 3000;
-const httpsPort = 8000;
+//const port = 3000;
+//const httpsPort = 8000;
 const path = require('path');
 
 const mongoose = require('mongoose');
@@ -37,13 +37,17 @@ const options = {
 };
 
 db.on('connected', () => {
-    https.createServer(options, app).listen(httpsPort);
-
-    http.createServer((req, res) => {
-        res.writeHead(301, { 'Location': 'https://localhost:8000' + req.url });
-        res.end();
-    }).listen(port);
-});
+    process.env.NODE_ENV = process.env.NODE_ENV || "development";
+    if (process.env.NODE_ENV === "production") {
+       require("./production")(app, process.env.PORT);
+    } else {
+       require("./localhost")(
+           app,
+           process.env.HTTPS_PORT,
+           process.env.HTTP_PORT
+       );
+    }
+ });
 
 
 app.use(express.static(path.join(__dirname, '/public')));
@@ -82,28 +86,6 @@ app.get('/generate', async (req, res) => {
 
     res.json(post.id);
 }) 
-/*
-app.get('/chat', async (req, res) => {
-    res.sendFile('./public/chat.html', {root: __dirname })
-})
-
-app.get('/profile', async  (req, res) => {
-    res.sendFile('./public/profile.html', {root: __dirname })
-})
-
-app.get('/explore', async  (req, res) => {
-    res.sendFile('./public/explore.html', {root: __dirname })
-})
-
-app.get('/login', async (req, res) => {
-    res.sendFile('./public/login.html', {root: __dirname })
-})
-*/
-/*
-app.get('/post/:id', async (req, res) => {
-    res.json(postModel.findById(req.params.id));
-});
-*/
 
 
 const bcrypt = require('bcrypt');
