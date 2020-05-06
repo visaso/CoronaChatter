@@ -16,6 +16,7 @@
         }
         */
         //loadFeed();
+        init();
         
     }
     const fetchGraphql = async (query) => {
@@ -38,16 +39,37 @@
         }
     };
 
+    const init = async () => {
+      const topicList = document.getElementById("listOfTopics");
+      const queryTopics = `{
+        topics {
+          id
+          title
+        }
+      }`;
+      const options = await fetchGraphql(queryTopics);
+      console.log("Topics", options);
+      
+      options.topics.forEach((type) => {
+      let template = `<option value="${type.id}">${type.title}</option>`;
+
+      $('#listOfTopics').append(Mustache.render(template, options));
+      });
+    }
+
     const createPost = async (e) => {
       e.preventDefault();
+      /*
       const queryString = window.location.search;
       const urlParams = new URLSearchParams(queryString);
       const id = urlParams.get('id');
+      */
+
       const titleValue = document.getElementById("title").value;
       const textValue = document.getElementById("text").value;
       const mediaValue = document.getElementById("media").value;
       const dateCreatedValue = document.getElementById("dateCreated").value;
-      const topicValue = document.getElementById("topic").value;
+      const topicValue = document.getElementById("listOfTopics").value;
 
       const query = `mutation {
         addPost(user:"${localStorage.getItem('userid')}" title:"${titleValue}" topic:"${topicValue}" text:"${textValue}" media:"${mediaValue}" dateCreated:"${dateCreatedValue}") {

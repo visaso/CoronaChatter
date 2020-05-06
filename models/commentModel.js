@@ -6,7 +6,7 @@ const commentSchema = new Schema({
   user: {type: mongoose.Types.ObjectId, ref: 'User'},
   //  post: {type: mongoose.Types.ObjectId, ref: 'Post'},
   text: {type: String, required: true},
-  dateCreated: {type: String, required: true},
+  dateCreated: {type: String},
   upvoters: [{type: mongoose.Types.ObjectId, ref: 'User'}],
   post: {type: mongoose.Types.ObjectId, ref: 'Post'},
 });

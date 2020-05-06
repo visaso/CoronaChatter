@@ -94,11 +94,12 @@
           $.each(item.posts, function(index, itemO) {
             console.log(itemO);
             let templateO = `<div class="card" style="width: 95%; margin: auto;">
-            <img class="card-img-top" src="./img/rippled-swedish-flag-720.jpg" alt="Card image cap">
+            
             <div class="card-body">
-            <p style="margin:1px;"><em>{{ title }}</em></p>
+            <p style="margin:1px;"><em>User: {{ user.username }}</em></p>
+            <h3 style="margin:1px;"><em>Title: {{ title }}</em></h3>
             <h5 class="card-title"></h5>
-            <p class="card-text"></p>
+            <p class="card-text">{{text}}</p>
             <button class="btn btn-primary" onclick="readPost('${itemO.id}')"><i class="fas fa-search">Read</i></button>
             </div>
             </div>
@@ -133,7 +134,7 @@
 
 
         const html = `<div class="card" style="width: 100%; margin: auto;">
-            <img class="card-img-top" src="./img/rippled-swedish-flag-720.jpg" alt="Card image cap">
+            
             <div class="card-body">
             <h5 class="card-title">${type.title}</h5>
             <p class="card-text">${type.description}</p>

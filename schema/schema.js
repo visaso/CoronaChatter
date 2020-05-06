@@ -427,7 +427,7 @@ const Mutation = new GraphQLObjectType({
                     return new Error(e.message);
                 }
           }
-      }
+      },
     }
   })
 

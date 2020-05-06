@@ -10,40 +10,40 @@
   </head>
 
   
+
   <body>
     <nav class="navbar navbar-dark bg-dark sticky-top">
       <span class="navbar-brand h1">CoronaChatter</span>
     </nav>
+
     
     <div class="container">
+      <div id="welcome"></div>
 
-      <div class="card" style="width: 100%;">
-        <img class="card-img-top rounded-circle" src="./img/rippled-swedish-flag-720.jpg" alt="Card image cap">
-        <div class="card-body">
-          <h5 class="card-title">${data.user.username}</h5>
-          <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-        </div>
-      </div><br><div>
-      <button id="deleteUserBtn" type="button" class="btn btn-danger">Delete user</button>
-    </div>
+      <div id="target"></div>
 
-    <nav class="nav fixed-bottom ">
-      <a href="./chat.html" class="nav-link" id="feedBtn">
-        <i class="fas fa-home"></i>
-        <span class="nav-text">Feed</span>
-      </a>
-      <a href="./explore.html" class="nav-link" id="exploreBtn">
-        <i class="fas fa-search-plus"></i>
-        <span class="nav-text">Explore</span>
-      </a>
-      <a href="./profile.html" class="nav-link" id="profileBtn">
-        <i class="fas fa-user"></i>
-        <span class="nav-text">Profile</span>
-      </a>
-    </nav>
+      <div id="feed"></div>
+
+      <nav class="nav fixed-bottom ">
+        <a href="./chat.html" class="nav-link active" id="feedBtn">
+          <i class="fas fa-home"></i>
+          <span class="nav-text">Feed</span>
+        </a>
+        <a href="./explore.html" class="nav-link" id="exploreBtn">
+          <i class="fas fa-search-plus"></i>
+          <span class="nav-text">Explore</span>
+        </a>
+        <a href="./profile.html" class="nav-link" id="profileBtn">
+          <i class="fas fa-user"></i>
+          <span class="nav-text">Profile</span>
+        </a>
+      </nav>
+      
+
 
     </div>
-    <script src="./js/main.js"></script>
+    <script src="./js/mustache.js"></script>
+    <script src="./js/explore.js"></script>
     <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>

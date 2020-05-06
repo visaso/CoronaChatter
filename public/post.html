@@ -20,14 +20,19 @@
       <div id="profile"></div>
 
       <div class="card" style="width: 100%;">
-        <img class="card-img-top rounded-circle" src="./img/rippled-swedish-flag-720.jpg" alt="Card image cap">
+      
         <div class="card-body">
           <h5 id="usernameLabel" class="card-title"></h5>
+          <p id="userLabel"></p>
           <p id="titleLabel" class="card-text"></p>
-          <button id="logoutBtn" type="button" class="btn btn-warning">Logout</button>
-          <button id="deleteUserBtn" type="button" class="btn btn-danger">Delete user</button>
+          <p id="textLabel"></p>
         </div>
       </div><br><div>
+    </div>
+
+    <div class="commentBox" style="display: flex;">
+      <input class="form-control" id="commentText" type="text" placeholder="Add a comment">
+      <button id="commentButton" class="btn btn-primary">Comment</button>
     </div>
 
     <div id="container">

@@ -84,7 +84,6 @@
             const html = `<div class="card" style="width: 100%; margin: auto;">
             <div class="card-body" style="display: inline-flex; justify-content: space-between;">
             <h5 class="card-title">${type.title}</h5>
-            <a href="#" class="btn btn-primary">Subscribe</a>
             </div>
             </div>
             <br>`;
@@ -105,7 +104,7 @@
       try {    
         const data = await fetchGraphql(query);
         console.log(data);
-        location.href="https://localhost:8000/login";
+        location.href="./login.html";
       } catch (e) {
         console.log(e.message);
       }
@@ -114,7 +113,7 @@
     const logout = async (e) => {
       localStorage.removeItem('token');
       localStorage.removeItem('userid');
-      location.href='https://localhost:8000/login';
+      location.href='./login.html';
     }
 
     deleteUserButton.addEventListener('click', (e) => {

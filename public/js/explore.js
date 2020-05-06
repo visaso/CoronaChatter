@@ -7,18 +7,14 @@
     const feedButton = document.getElementById('feedBtn');
     const exploreButton = document.getElementById('exploreBtn');
     const profileButton = document.getElementById('profileBtn');
-    const commentButton = document.getElementById('commentButton');
+    const deleteUserButton = document.getElementById('deleteUserBtn');
     const feed = document.getElementById('feed');
+    const target = document.getElementById('target');
     const welcome = document.getElementById('welcome');
     const explore = document.getElementById('explore');
     const profile = document.getElementById('profile');
     const settings = document.getElementById('settings');
     let userData = {};
-
-    const feedLabel = document.getElementById('titleLabel');
-    const userLabel = document.getElementById('userLabel');
-    const textLabel = document.getElementById('textLabel');
-    const commentSection = document.getElementById('commentSection');
 
     window.onload = function() {
         'use strict';
@@ -28,7 +24,7 @@
                    .register('./sw.js');
         }
         */
-        loadPost();
+        loadFeed();
         
     }
 
@@ -54,23 +50,14 @@
         }
     };
 
-    const loadPost = async (e) => {
-      const queryString = window.location.search;
-      const urlParams = new URLSearchParams(queryString);
-      const id = urlParams.get('id');
-
+    const loadFeed = async (e) => {
         const query = `{
-          post(id:"${id}") {
+          topics {
+            id
             title
-            text
-            user {
+            description
+            users {
               username
-            }
-            comments {
-              user {
-                username
-              }
-              text
             }
           }
         }`;
@@ -78,58 +65,50 @@
         const data = await fetchGraphql(query);
 
         console.log('data returned:', data)
-        feedLabel.innerHTML = `<h3>${data.post.title}</h3>`;
-        userLabel.innerHTML = `<p>Poster: ${data.post.user.username}</p>`;
-        textLabel.innerHTML = `<p>${data.post.text}</p>`;
-
-
-        if (data.post.comments.length < 1) {
-          commentSection.innerHTML = `<div id="commentSection">
-          <h6>Comments</h6>
-          <div class="card">
-            <p id="titleLabel" class="card-text">It's quiet here...</p>
-          </div>
-        </div>`
-        } else {
-          $.each(data.post.comments, function(index, item) {
-              console.log(item);
-              let template = `<div class="card" style="width: 95%; margin: auto;">
-              <div class="card-body">
-              <p style="margin:1px;"><em>User: {{ user.username }}</em></p>
-              <h5 class="card-title"></h5>
-              <p class="card-text">{{ text }}</p>
-              
-              </div>
-              </div>
-              <br>`;
-              $('#commentSection').append(Mustache.render(template, item));
-          });
-        }
         //console.log('posts', data.user.topics[0].posts);
-        
-      
+        const feed = document.getElementById('feed');
+        feed.innerHTML = "";
+
+        let templateO = `<div class="alert alert-primary" style="margin-top: 10px;">
+        These are the topics currently active.
+        </div>`;
+      $('#welcome').append(Mustache.render(templateO, data));
+
+      if (data.topics < 1) {
+        target.innerHTML = `<div class="alert alert-danger" style="margin-top: 10px;">
+        Looks like you haven't subscribed to any topics yet! Head over to the Explore-tab to find interesting topics.
+        </div>`
+      } else {
+        $.each(data.topics, function(index, item) {
+          console.log(item);
+
+            let templateO = `<div class="card" style="width: 95%; margin: auto;">
+            <div class="card-body">
+            <p style="margin:1px;"><em>{{ title }}</em></p>
+            <h5 class="card-title"></h5>
+            <p class="card-text">{{ description }}</p>
+            <button class="btn btn-primary" onclick="subscribeTopic('${item.id}')"><i class="fas fa-plus"> Subscribe</i></button>
+            </div>
+            </div>
+            <br>`;
+            $('#target').append(Mustache.render(templateO, item));
+        });
+      }
     }
 
-    const addComment = async (e) => {
-      const queryString = window.location.search;
-      const urlParams = new URLSearchParams(queryString);
-      const id = urlParams.get('id');
-      const text = document.getElementById('commentText').value;
+    const subscribeTopic = async (id) => {
+      console.log(id);
 
       const query = `mutation {
-        addComment(user:"${localStorage.getItem('userid')}" post:"${id}" text:"${text}") {
-          id
+        addUserToTopic(user:"${localStorage.getItem('userid')}" topic:"${id}") {
+          username
         }
       }`;
+
       const data = await fetchGraphql(query);
-      console.log(data);
-      location.href="./post.html?id=" + id;
 
-    }
-
-    const readPost = async (id) => {
-      console.log(id);
-      location.href="./post/id:" + id;
+      
+      //location.href="./post.html?id=" + id;
     }
       
     const loadExplore = async (e) => {
@@ -166,13 +145,9 @@
 
     }
 
-    commentButton.addEventListener('click', (e) => {
-      console.log("hey");
-        addComment(e);
-    })
-
+    
     feedButton.addEventListener('click', (e) => {
-        loadPost(e);
+        loadFeed(e);
     })
     exploreButton.addEventListener('click', (e) => {
         loadExplore(e);
