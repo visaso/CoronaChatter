@@ -3,12 +3,9 @@ require('dotenv').config();
 
 const express = require('express');
 const app = express();
-//const port = 3000;
-//const httpsPort = 8000;
 const path = require('path');
 
 const mongoose = require('mongoose');
-const tester = require('./models/test');
 const http = require('http');
 
 const https = require('https');
