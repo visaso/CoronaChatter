@@ -7,7 +7,7 @@
 
 
     const fetchGraphql = async (query) => {
-      const apiURL = 'https://localhost:8000/graphql';
+      const apiURL = 'https://wisardster.jelastic.metropolia.fi/graphql';
         const options = {
         method: 'POST',
         headers: {

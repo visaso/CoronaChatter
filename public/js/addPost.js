@@ -2,7 +2,7 @@
 
     'use strict';
 
-    const apiURL = 'https://localhost:8000/graphql';
+    const apiURL = 'https://wisardster.jelastic.metropolia.fi/graphql';
 
     const createPostBtn = document.getElementById('createPostBtn');
 
