@@ -9,7 +9,6 @@ const login = (req, res) => {
     passport.authenticate('local', {session: false},
         async (err, user, info) => {
           try {
-            console.log('controller info', info);
             if (err || !user) {
               reject(info.message);
             }
@@ -17,9 +16,7 @@ const login = (req, res) => {
               if (err) {
                 reject(err);
               }
-              // generate a signed son web token with the contents of user object and return it in the response
               const token = jwt.sign(user, 'someKey');
-              console.log("Authcontroller user-object: ", user);
               resolve({user, token});
             });
           }
@@ -35,8 +32,6 @@ const checkAuthentication = (req, res, args, userSpecific) => {
   return new Promise((resolve, reject) => {
     passport.authenticate("jwt", (err, user) => {
 
-      console.log("Error: ", err);
-      console.log("User: ", user);
       if (err || !user) {
         console.log("Unauthenticated");
         reject(new Error("Unauthenticated"));

@@ -27,7 +27,6 @@ const sslcert = fs.readFileSync('./ssl-cert.pem')
 const graphQlHttp = require('express-graphql');
 const schema = require('./schema/schema');
 
-const postModel = require('./models/postModel');
 
 app.use(cors());
 
@@ -59,46 +58,12 @@ app.use('/post', require('./routes/postRoute'));
 
 app.use('/auth', require('./routes/authRoute'));
 
-app.get('/test', async (req, res) => {
-    const test = await tester.create({ name: 'Thomas', age: 12 })
-    res.json(test.id);
-})
 
 app.get('/', (req, res) => {
     res.send('Hello Secure World!');
 });
 
 app.use('/graphql', (req, res) => {
-    console.log('Graphql');
     graphQlHttp({schema, graphiql: true, context: {req, res}})(req,
         res);
   });
-
-
-app.get('/generate', async (req, res) => {
-
-    const userModel = require('./models/userModel');
-    const postModel = require('./models/postModel');
-    const test = await userModel.create({ username: 'Thomas', password: 'hello', fullName : 'Thomas Manuelson', dateCreated : Date.now });
-    
-
-    const post = await postModel.create({ user: test.id , title: 'This is a title', text: 'Something Something', dateCreated: Date.now })
-
-    res.json(post.id);
-}) 
-
-
-const bcrypt = require('bcrypt');
-
-const saltRound = 12; //okayish in 2020
-
-const userModel = require('./models/userModel');
-app.post('/user', async (req, res) => {
-    try {
-        const hash = await bcrypt.hash(req.body.password, saltRound);
-        const myUser = await userModel.create({ username: req.body.username, password: hash, fullName: "Tester Dude", dateCreated: "4.5.2020" })
-        res.json(myUser.id);
-      } catch (e) {
-        console.log(e.message);
-      }
-});

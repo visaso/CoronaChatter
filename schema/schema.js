@@ -23,16 +23,7 @@ const user = require('../models/userModel');
 const post = require('../models/postModel');
 const comment = require('../models/commentModel');
 const topic = require('../models/topic');
-/*
-const userType = new GraphQLObjectType({
-    name: 'user',
-    fields: () => ({
-        id: { type: GraphQLID },
-        username: { type: GraphQLString },
-        token: { type: GraphQLString}
-    }),
-});
-*/
+
 
 const userType = new GraphQLObjectType({
     name: 'user',
@@ -131,14 +122,6 @@ const commentType = new GraphQLObjectType({
                 return user.find({ _id: parent.upvoters });
             }    
         },
-        /*
-        post: { 
-            type: postType,
-            resolve(parent, args) {
-                return post.findById(parent.post);
-            }    
-        }
-        */
     }),
 });
 
@@ -153,13 +136,10 @@ const RootQuery = new GraphQLObjectType({
                 password: {type: new GraphQLNonNull(GraphQLString)},
             },
             resolve: async (parent, args, { req, res }) => {
-                console.log()
                 req.body = args;
                 try {
-
                 const authController = require('../controllers/authController');
                 const response = await authController.login(req, res);
-                console.log("This is the authController data: ", response);
                 
                 return {
                     id: response.user._id,
