@@ -46,7 +46,7 @@ db.on('connected', () => {
  });
 
 
-app.use(express.static(path.join(__dirname, '/public')));
+app.use(express.static(__dirname + '/public'));
 
 app.use(express.json());
 app.use(express.urlencoded({extended:true}));
@@ -55,10 +55,11 @@ app.use('/post', require('./routes/postRoute'));
 
 app.use('/auth', require('./routes/authRoute'));
 
-
+/*
 app.get('/', (req, res) => {
     res.send('Hello Secure World!');
 });
+*/
 
 app.use('/graphql', (req, res) => {
     graphQlHttp({schema, graphiql: true, context: {req, res}})(req,
