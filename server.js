@@ -18,20 +18,20 @@ const bodyParser = require('body-parser')
 const passport = require('./utils/pass.js')
 const authRoute = require('./routes/authRoute')
 
-const sslkey = fs.readFileSync('./ssl-key.pem');
-const sslcert = fs.readFileSync('./ssl-cert.pem')
+//const sslkey = fs.readFileSync('./ssl-key.pem');
+//const sslcert = fs.readFileSync('./ssl-cert.pem')
 
 const graphQlHttp = require('express-graphql');
 const schema = require('./schema/schema');
 
 
 app.use(cors());
-
+/*
 const options = {
       key: sslkey,
       cert: sslcert
 };
-
+*/
 db.on('connected', () => {
     process.env.NODE_ENV = process.env.NODE_ENV || "development";
     if (process.env.NODE_ENV === "production") {
