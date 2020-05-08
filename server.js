@@ -34,7 +34,7 @@ app.use(express.urlencoded({extended:true}));
 
 app.use('/post', require('./routes/postRoute'));
 
-// app.use('/auth', require('./routes/authRoute'));
+app.use('/auth', require('./routes/authRoute'));
 
 
 app.use('/graphql', (req, res) => {
