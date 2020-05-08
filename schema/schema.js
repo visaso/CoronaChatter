@@ -279,12 +279,17 @@ const Mutation = new GraphQLObjectType({
         description: 'Update user information',
         args: {
             id : { type: new GraphQLNonNull(GraphQLID) },
+            username: { type: GraphQLString },
+            password: { type: GraphQLString },
         },
         resolve: async (parent, args, { req, res }) => {
             const userSpecific = true;
             try {
                 await authController.checkAuthentication(req, res, args, userSpecific);
-                await user.findOneAndUpdate(args.id);
+                await user.updateOne(
+                    { _id: args.id },
+                    { username: args.username },
+                    { password: args.password = await bcrypt.hash(args.password, salt) });
             } catch (e) {
                 throw new Error(e.message);
             }
